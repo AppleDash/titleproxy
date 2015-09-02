@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @lru_cache(maxsize=128)
 def fetch_url_title(url):
-	req = requests.get(url)
+	req = requests.get(url, timeout=3.0)
 	soup = BeautifulSoup(req.text)
 	if hasattr(soup, "title"):
 		return soup.title.text
