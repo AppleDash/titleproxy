@@ -3,10 +3,12 @@ import requests
 
 from escape import escape
 from bs4 import BeautifulSoup
+from functools import lru_cache
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+@lru_cache(maxsize=128)
 def fetch_url_title(url):
 	req = requests.get(url)
 	soup = BeautifulSoup(req.text)
