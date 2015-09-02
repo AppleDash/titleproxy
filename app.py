@@ -2,7 +2,7 @@
 import requests
 
 from bs4 import BeautifulSoup
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -21,7 +21,9 @@ def index():
 @app.route("/title")
 def title():
 	title = fetch_url_title(request.args["url"])
-	return title
+	return jsonify({
+		"title": title
+	})
 
 if __name__ == "__main__":
 	app.run(debug=True)
