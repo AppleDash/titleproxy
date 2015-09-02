@@ -20,10 +20,18 @@ def index():
 
 @app.route("/title")
 def title():
-	title = fetch_url_title(request.args["url"])
-	return jsonify({
-		"title": title
-	})
+	try:
+		title = fetch_url_title(request.args["url"])
+		return jsonify({
+			"error": False,
+			"title": title
+		})
+	except Exception as e:
+		return jsonify({
+			"error": True,
+			"error_message": str(e),
+			"error_cause": e.__class__.__name__
+		})
 
 if __name__ == "__main__":
 	app.run(debug=True)
