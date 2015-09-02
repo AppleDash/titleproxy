@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import requests
 
+from escape import escape
 from bs4 import BeautifulSoup
 from flask import Flask, request, jsonify
 
@@ -20,8 +21,11 @@ def index():
 
 @app.route("/title")
 def title():
+	escape_mode = request.args.get("escape", "")
 	try:
 		title = fetch_url_title(request.args["url"])
+		title = escape(title, escape_mode)
+
 		return jsonify({
 			"error": False,
 			"title": title
